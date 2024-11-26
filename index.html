@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com;">
+    <title>Dominic Kudom | GeoSpatial Developer</title>
+    <meta name="description" content="Professional GeoSpatial Developer specializing in geospatial analysis, mapping solutions, and spatial data management.">
+    <meta property="og:title" content="Dominic Kudom | GeoSpatial Developer">
+    <meta property="og:description" content="Professional GeoSpatial Developer specializing in geospatial analysis, mapping solutions, and spatial data management.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        #globe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+        }
+
+        #globe-canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+
+        .text-overlay {
+            position: fixed;
+            text-align: left;
+            z-index: 10;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .logo {
+            position: fixed;
+            left: 5%;
+            top: 5%;
+            font-family: 'Bebas Neue', sans-serif;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            z-index: 10;
+            line-height: 0.9;
+            text-decoration: none;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #4ECDC4;
+            transform: scale(1.05);
+        }
+
+        .logo .first-name {
+            font-size: 2rem;
+        }
+
+        .logo .last-name {
+            font-size: 1.8rem;
+        }
+
+        .freelance-info {
+            position: fixed;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #fff;
+            font-size: 13px;
+            line-height: 1.3;
+            z-index: 20;
+            opacity: 0.9;
+        }
+
+        .company-name {
+            position: fixed;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        .company-tagline {
+            position: fixed;
+            left: 5%;
+            top: calc(50% + 60px);
+            font-size: 1.2rem;
+            color: #4ECDC4;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        .bio-text {
+            position: fixed;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 400px;
+            font-size: 13px;
+            line-height: 1.7;
+            text-align: right;
+            z-index: 10;
+        }
+
+        .tech-stack {
+            position: fixed;
+            top: 5%;
+            right: 5%;
+            text-align: right;
+            color: #fff;
+            font-size: 13px;
+            line-height: 1.6;
+            z-index: 20;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            position: fixed;
+            bottom: 5%;
+            right: 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 20;
+            text-align: right;
+        }
+
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+            padding: 0.3rem 0;
+        }
+
+        .social-links a:hover {
+            color: #4ECDC4;
+        }
+
+        .nav-links {
+            position: fixed;
+            bottom: 5%;
+            left: 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 20;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+            padding: 0.3rem 0;
+        }
+
+        .nav-links a:hover {
+            color: #4ECDC4;
+        }
+
+        .about-section {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            z-index: 15;
+            display: none;
+            text-align: left;
+            line-height: 1.7;
+            font-size: 13px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .about-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: 100%;
+            }
+
+            #globe-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 45vh;
+                margin: 0;
+                z-index: 1;
+            }
+
+            .mobile-content {
+                position: relative;
+                margin-top: 45vh;
+                background: rgba(0, 0, 0, 0.85);
+                min-height: 55vh;
+                z-index: 2;
+                padding: 2rem 1.5rem;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-top-left-radius: 30px;
+                border-top-right-radius: 30px;
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .logo {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 30;
+            }
+
+            .logo .first-name {
+                font-size: 1.6rem;
+            }
+
+            .logo .last-name {
+                font-size: 1.4rem;
+            }
+
+            .freelance-info {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                font-size: 0.8rem;
+                text-align: right;
+                z-index: 30;
+                background: rgba(0, 0, 0, 0.7);
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                transform: none;
+                left: auto;
+            }
+
+            .company-name {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                text-align: center;
+                background: none;
+                padding: 0;
+                position: relative;
+                transform: none;
+                width: 100%;
+                left: 0;
+                top: 0;
+            }
+
+            .company-tagline {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+                text-align: center;
+                background: none;
+                padding: 0;
+                position: relative;
+                transform: none;
+                width: 100%;
+                left: 0;
+                top: 0;
+                color: #4ECDC4;
+            }
+
+            .bio-text {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 2rem;
+                position: relative;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background: none;
+                padding: 0;
+            }
+
+            .tech-stack {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+                margin-bottom: 2rem;
+                position: relative;
+                right: auto;
+                top: auto;
+                font-size: 0.8rem;
+                background: none;
+            }
+
+            .tech-stack span {
+                background: rgba(78, 205, 196, 0.1);
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(78, 205, 196, 0.2);
+            }
+
+            .social-links {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                position: relative;
+                left: 0;
+                bottom: 0;
+                background: none;
+                padding: 0;
+            }
+
+            .social-links a {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .social-links a:hover {
+                background: rgba(78, 205, 196, 0.2);
+                border-color: rgba(78, 205, 196, 0.3);
+            }
+
+            .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                margin-top: 2rem;
+                position: relative;
+                right: auto;
+                bottom: auto;
+                background: none;
+                padding: 0;
+            }
+
+            .nav-links a {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                background: rgba(78, 205, 196, 0.2);
+                border-color: rgba(78, 205, 196, 0.3);
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .tech-stack {
+                font-size: 12px;
+                top: 60px;
+            }
+
+            .freelance-info {
+                font-size: 12px;
+            }
+
+            .company-name {
+                font-size: 2rem;
+            }
+
+            .company-tagline {
+                font-size: 1rem;
+            }
+
+            .bio-text {
+                font-size: 1rem;
+                max-width: 45%;
+            }
+
+            .nav-links {
+                padding: 0.6rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container">
+        <canvas id="globe-canvas"></canvas>
+    </div>
+    <div class="mobile-content">
+        <a href="/" class="logo">
+            <div class="first-name">Dominic</div>
+            <div class="last-name">Kudom</div>
+        </a>
+        <div class="freelance-info">
+            Available for freelance<br>
+            <a href="mailto:dominickudom@icloud.com">dominickudom@icloud.com</a>
+        </div>
+        <h1 class="company-name">Ecstasy GeoSpatial Services</h1>
+        <p class="company-tagline">Transforming spatial data into actionable insights</p>
+        <p class="bio-text">I am Dominic Kudom, a creative geospatial web developer and designer specializing in leveraging technology to bring spatial data to life. My journey began in backend development, but my passion for visualizing and creating interactive geospatial experiences led me to explore innovative 3D and web-based solutions. To channel this passion, I founded Ecstasy Geospatial Services, where I combine technical expertise and creativity to solve spatial challenges and deliver impactful digital solutions.</p>
+        <div class="tech-stack">
+            <span>Python, Flask, Django</span>
+            <span>React.js, Three.js</span>
+            <span>PostgreSQL, PostGIS</span>
+            <span>OpenLayers, Leaflet</span>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/PlnDominic" target="_blank">Github</a>
+            <a href="http://linkedin.com/in/pln-dominic-kudom-mgip-039a44130" target="_blank">LinkedIn</a>
+            <a href="mailto:dominickudom1738@gmail.com">Gmail</a>
+        </div>
+        <nav class="nav-links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#services">Services</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+    <div class="about-section" id="about">
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.153.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.153.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="js/globe.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
