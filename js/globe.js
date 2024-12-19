@@ -12,22 +12,22 @@ class Globe {
         // Define continent colors for both themes
         this.continentColors = {
             dark: {
-                'North America': 0xFF6B6B,  // Coral Red
-                'South America': 0x4ECDC4,  // Turquoise
-                'Europe': 0x45B7D1,        // Sky Blue
-                'Africa': 0xFFBE0B,        // Golden Yellow
-                'Asia': 0x96CEB4,          // Sage Green
-                'Oceania': 0xFF9F1C,       // Orange
-                'Antarctica': 0xFAFAFA     // White
+                'North America': 0x4287f5,  // Bright Blue
+                'South America': 0x42f54b,  // Bright Green
+                'Europe': 0xf542cb,         // Pink
+                'Africa': 0xf5a142,         // Orange
+                'Asia': 0xf54242,           // Red
+                'Oceania': 0x42f5f5,        // Cyan
+                'Antarctica': 0xffffff      // White
             },
             light: {
-                'North America': 0xE63946,  // Darker Red
-                'South America': 0x2A9D8F,  // Darker Turquoise
-                'Europe': 0x1D7A99,        // Darker Blue
-                'Africa': 0xE6A100,        // Darker Yellow
-                'Asia': 0x588B7E,          // Darker Green
-                'Oceania': 0xE67E00,       // Darker Orange
-                'Antarctica': 0xE0E0E0     // Light Gray
+                'North America': 0x2b5aa3,  // Darker Blue
+                'South America': 0x2ba332,  // Darker Green
+                'Europe': 0xa32b89,         // Darker Pink
+                'Africa': 0xa36b2b,         // Darker Orange
+                'Asia': 0xa32b2b,           // Darker Red
+                'Oceania': 0x2ba3a3,        // Darker Cyan
+                'Antarctica': 0xe0e0e0      // Light Gray
             }
         };
         
@@ -147,7 +147,7 @@ class Globe {
         const sphereMaterial = new THREE.MeshPhongMaterial({
             color: 0x000000,
             transparent: true,
-            opacity: 0.8,
+            opacity: 0.3,
         });
         this.globe = new THREE.Mesh(sphereGeometry, sphereMaterial);
         this.scene.add(this.globe);
@@ -210,24 +210,31 @@ class Globe {
     }
 
     getColorByCoordinate(lat, lon) {
-        let continent;
-        // Simplified continent determination
-        if (lat > 60) continent = 'North America';
-        else if (lat < -60) continent = 'Antarctica';
-        // Northern Hemisphere
-        else if (lat > 0) {
-            if (lon < -20) continent = 'North America';
-            else if (lon < 65) continent = 'Europe';
-            else continent = 'Asia';
-        }
-        // Southern Hemisphere
-        else {
-            if (lon < -65) continent = 'South America';
-            else if (lon < 50) continent = 'Africa';
-            else continent = 'Oceania';
+        // Determine continent based on coordinates
+        if (lat >= 60) return this.continentColors[this.currentTheme]['North America']; // Arctic
+        if (lat <= -60) return this.continentColors[this.currentTheme]['Antarctica']; // Antarctica
+        
+        if (lon >= -170 && lon <= -30) { // Americas
+            if (lat > 15) return this.continentColors[this.currentTheme]['North America'];
+            return this.continentColors[this.currentTheme]['South America'];
         }
         
-        return this.continentColors[this.currentTheme][continent];
+        if (lon >= -30 && lon <= 60) { // Europe and Africa
+            if (lat > 35) return this.continentColors[this.currentTheme]['Europe'];
+            return this.continentColors[this.currentTheme]['Africa'];
+        }
+        
+        if (lon > 60 && lon <= 145) { // Asia
+            if (lat > -10) return this.continentColors[this.currentTheme]['Asia'];
+            return this.continentColors[this.currentTheme]['Oceania'];
+        }
+        
+        if (lon > 145) { // Pacific/Oceania
+            if (lat > 0) return this.continentColors[this.currentTheme]['Asia'];
+            return this.continentColors[this.currentTheme]['Oceania'];
+        }
+        
+        return this.continentColors[this.currentTheme]['Oceania']; // Default
     }
 
     onWindowResize() {
