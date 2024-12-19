@@ -57,7 +57,7 @@ class Globe {
     setupCamera() {
         const aspect = this.container.clientWidth / this.container.clientHeight;
         this.camera = new THREE.PerspectiveCamera(60, aspect, 0.1, 2000);
-        this.camera.position.z = 300;
+        this.camera.position.z = 250;
     }
 
     setupRenderer() {
@@ -85,8 +85,8 @@ class Globe {
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.rotateSpeed = 0.5;
-        this.controls.minDistance = 200;
-        this.controls.maxDistance = 400;
+        this.controls.minDistance = 150;
+        this.controls.maxDistance = 350;
     }
 
     setupThemeListener() {
@@ -143,7 +143,7 @@ class Globe {
 
     createGlobe() {
         // Create Earth sphere
-        const sphereGeometry = new THREE.SphereGeometry(100, 64, 64);
+        const sphereGeometry = new THREE.SphereGeometry(80, 64, 64);
         const sphereMaterial = new THREE.MeshPhongMaterial({
             color: 0x000000,
             transparent: true,
@@ -178,7 +178,7 @@ class Globe {
                 if (feature.geometry) {
                     const countryMesh = drawThreeGeo({
                         json: feature,
-                        radius: 100,
+                        radius: 80,
                         shape: 'sphere',
                         materialOptions: {
                             color: this.getColorByCoordinate(

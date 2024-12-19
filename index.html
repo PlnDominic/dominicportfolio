@@ -29,11 +29,13 @@
 
         #globe-container {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 100vw;
             height: 100vh;
             background: #000;
+            z-index: 1;
         }
 
         #globe-canvas {
@@ -94,11 +96,11 @@
         .company-name {
             position: fixed;
             left: 5%;
-            top: 45%;
+            top: 50%;
             transform: translateY(-50%);
             font-family: 'Bebas Neue', sans-serif;
             font-size: 3.5rem;
-            max-width: 600px;
+            max-width: 400px;
             z-index: 10;
             line-height: 1;
             color: #fff;
@@ -107,10 +109,10 @@
         .company-tagline {
             position: fixed;
             left: 5%;
-            top: 55%;
+            top: 60%;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
-            max-width: 500px;
+            max-width: 400px;
             z-index: 10;
         }
 
@@ -120,7 +122,7 @@
             top: 50%;
             transform: translateY(-50%);
             text-align: right;
-            max-width: 600px;
+            max-width: 400px;
             font-size: 0.9rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.9);
@@ -183,14 +185,33 @@
         }
 
         @media (max-width: 768px) {
+            #globe-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 45vh;
+                margin: 0;
+                z-index: 1;
+            }
+
             .company-name {
+                position: relative;
                 font-size: 2.5rem;
-                top: 35%;
+                top: auto;
+                transform: none;
+                margin: 60vh 5% 1rem;
+                text-align: center;
+                max-width: none;
             }
 
             .company-tagline {
-                top: 45%;
-                font-size: 0.8rem;
+                position: relative;
+                top: auto;
+                margin: 0 5%;
+                text-align: center;
+                max-width: none;
             }
 
             .bio {
@@ -199,20 +220,16 @@
                 top: auto;
                 transform: none;
                 text-align: left;
-                margin: 80vh 5% 2rem;
-                font-size: 0.8rem;
+                margin: 2rem 5%;
+                max-width: none;
             }
 
             .tech-stack {
-                font-size: 0.7rem;
-            }
-
-            .nav-links {
-                bottom: 15%;
-            }
-
-            .social-links {
-                bottom: 5%;
+                position: relative;
+                right: auto;
+                top: auto;
+                text-align: center;
+                margin: 2rem 5%;
             }
         }
 
