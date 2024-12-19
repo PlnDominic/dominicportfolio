@@ -94,32 +94,36 @@
         .company-name {
             position: fixed;
             left: 5%;
-            top: 50%;
+            top: 45%;
             transform: translateY(-50%);
-            font-size: 3rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
             max-width: 600px;
             z-index: 10;
+            line-height: 1;
+            color: #fff;
         }
 
         .company-tagline {
             position: fixed;
             left: 5%;
-            top: calc(50% + 60px);
-            font-size: 1.2rem;
-            color: #4ECDC4;
-            max-width: 600px;
+            top: 55%;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 500px;
             z-index: 10;
         }
 
-        .bio-text {
+        .bio {
             position: fixed;
             right: 5%;
             top: 50%;
             transform: translateY(-50%);
-            max-width: 400px;
-            font-size: 13px;
-            line-height: 1.7;
             text-align: right;
+            max-width: 600px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
             z-index: 10;
         }
 
@@ -128,11 +132,31 @@
             top: 5%;
             right: 5%;
             text-align: right;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 10;
+        }
+
+        .nav-links {
+            position: fixed;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .nav-links a {
             color: #fff;
-            font-size: 13px;
-            line-height: 1.6;
-            z-index: 20;
-            opacity: 0.8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4ECDC4;
         }
 
         .social-links {
@@ -142,70 +166,54 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            z-index: 20;
             text-align: right;
+            z-index: 10;
+            pointer-events: auto;
         }
 
         .social-links a {
             color: #fff;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 0.8rem;
             transition: color 0.3s ease;
-            padding: 0.3rem 0;
         }
 
         .social-links a:hover {
             color: #4ECDC4;
         }
 
-        .nav-links {
-            position: fixed;
-            bottom: 5%;
-            left: 5%;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            z-index: 20;
-        }
+        @media (max-width: 768px) {
+            .company-name {
+                font-size: 2.5rem;
+                top: 35%;
+            }
 
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.3s ease;
-            padding: 0.3rem 0;
-        }
+            .company-tagline {
+                top: 45%;
+                font-size: 0.8rem;
+            }
 
-        .nav-links a:hover {
-            color: #4ECDC4;
-        }
+            .bio {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                text-align: left;
+                margin: 80vh 5% 2rem;
+                font-size: 0.8rem;
+            }
 
-        .about-section {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            z-index: 15;
-            display: none;
-            text-align: left;
-            line-height: 1.7;
-            font-size: 13px;
-            border: 1px solid rgba(78, 205, 196, 0.2);
-        }
+            .tech-stack {
+                font-size: 0.7rem;
+            }
 
-        .about-section.visible {
-            display: block;
-            animation: fadeIn 0.5s ease-out;
-        }
+            .nav-links {
+                bottom: 15%;
+            }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            .social-links {
+                bottom: 5%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -421,38 +429,43 @@
     <div id="globe-container">
         <canvas id="globe-canvas"></canvas>
     </div>
-    <div class="mobile-content">
-        <a href="/" class="logo">
-            <div class="first-name">Dominic</div>
-            <div class="last-name">Kudom</div>
-        </a>
-        <div class="freelance-info">
-            Available for freelance<br>
-            <a href="mailto:dominickudom@icloud.com">dominickudom@icloud.com</a>
-        </div>
-        <h1 class="company-name">Ecstasy GeoSpatial Services</h1>
-        <p class="company-tagline">Transforming spatial data into actionable insights</p>
-        <p class="bio-text">I am Dominic Kudom, a creative geospatial web developer and designer specializing in leveraging technology to bring spatial data to life. My journey began in backend development, but my passion for visualizing and creating interactive geospatial experiences led me to explore innovative 3D and web-based solutions. To channel this passion, I founded Ecstasy Geospatial Services, where I combine technical expertise and creativity to solve spatial challenges and deliver impactful digital solutions.</p>
-        <div class="tech-stack">
-            <span>Python, Flask, Django</span>
-            <span>React.js, Three.js</span>
-            <span>PostgreSQL, PostGIS</span>
-            <span>OpenLayers, Leaflet</span>
-        </div>
-        <div class="social-links">
-            <a href="https://github.com/PlnDominic" target="_blank">Github</a>
-            <a href="http://linkedin.com/in/pln-dominic-kudom-mgip-039a44130" target="_blank">LinkedIn</a>
-            <a href="mailto:dominickudom1738@gmail.com">Gmail</a>
-        </div>
-        <nav class="nav-links">
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#services">Services</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">Contact</a>
-        </nav>
+
+    <a href="#" class="logo">
+        <div class="first-name">DOMINIC</div>
+        <div class="last-name">KUDOM</div>
+    </a>
+
+    <div class="freelance-info">
+        Available for freelance<br>
+        dominickudom@icloud.com
     </div>
-    <div class="about-section" id="about">
+
+    <div class="tech-stack">
+        Python, Flask, Django<br>
+        React.js, Three.js<br>
+        PostgreSQL, PostGIS<br>
+        OpenLayers, Leaflet
+    </div>
+
+    <h1 class="company-name">ECSTASY GEOSPATIAL SERVICES</h1>
+    <p class="company-tagline">Transforming spatial data into actionable insights</p>
+
+    <div class="bio">
+        I am Dominic Kudom, a creative geospatial web developer and designer specializing in leveraging technology to bring spatial data to life. My journey began in backend development, but my passion for visualizing and creating interactive geospatial experiences led me to explore innovative 3D and web-based solutions. To channel this passion, I founded Ecstasy Geospatial Services, where I combine technical expertise and creativity to solve spatial challenges and deliver impactful digital solutions.
+    </div>
+
+    <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="social-links">
+        <a href="https://github.com/PlnDominic" target="_blank">Github</a>
+        <a href="https://linkedin.com/in/dominic-kudom" target="_blank">LinkedIn</a>
+        <a href="mailto:dominickudom@icloud.com">Gmail</a>
     </div>
 
     <script type="importmap">
