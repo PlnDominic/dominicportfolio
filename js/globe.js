@@ -75,7 +75,8 @@ class Globe {
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
-            alpha: true
+            alpha: true,
+            context: this.canvas.getContext('webgl', { preserveDrawingBuffer: true })
         });
         this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -127,29 +128,6 @@ class Globe {
             this.globe.material.color.setHex(this.currentTheme === 'light' ? 0xFFFFFF : 0x000000);
             this.globe.material.opacity = this.currentTheme === 'light' ? 0.9 : 0.8;
         }
-        
-        // Update countries colors
-        if (this.globe.children.length > 1) {
-            const countriesGroup = this.globe.children[1];
-            countriesGroup.traverse((child) => {
-                if (child instanceof THREE.Mesh) {
-                    const lat = child.userData.lat || 0;
-                    const lon = child.userData.lon || 0;
-                    child.material.color.setHex(this.getColorByCoordinate(lat, lon));
-                    child.material.opacity = this.currentTheme === 'light' ? 0.9 : 0.8;
-                }
-            });
-        }
-        
-        // Update ambient light intensity
-        this.scene.traverse((child) => {
-            if (child instanceof THREE.AmbientLight) {
-                child.intensity = this.currentTheme === 'light' ? 0.8 : 0.6;
-            }
-            if (child instanceof THREE.PointLight) {
-                child.intensity = this.currentTheme === 'light' ? 1.2 : 1.0;
-            }
-        });
     }
 
     createGlobe() {
@@ -238,7 +216,7 @@ class Globe {
             return this.continentColors[this.currentTheme]['Africa'];
         }
         
-        if (lon > 60 && lon <= 145) { // Asia
+        if (lon >= 60 && lon <= 145) { // Asia
             if (lat > -10) return this.continentColors[this.currentTheme]['Asia'];
             return this.continentColors[this.currentTheme]['Oceania'];
         }
