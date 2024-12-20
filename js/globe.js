@@ -1,5 +1,5 @@
-import * as THREE from '../js/three.module.js';
-import { OrbitControls } from '../js/controls/OrbitControls.js';
+import * as THREE from './three.module.js';
+import { OrbitControls } from './controls/OrbitControls.js';
 import getStarfield from './src/getStarfield.js';
 import { drawThreeGeo } from './src/threeGeoJSON.js';
 
