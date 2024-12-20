@@ -43,6 +43,14 @@ class Globe {
         
         // Listen for theme changes
         this.setupThemeListener();
+        
+        // Add event listener for theme toggle
+        const toggle = document.getElementById('toggle');
+        toggle.addEventListener('change', () => {
+            this.currentTheme = toggle.checked ? 'light' : 'dark';
+            this.updateTheme();
+        });
+        toggle.checked = this.currentTheme === 'light'; // Set initial state based on current theme
     }
 
     async init() {
