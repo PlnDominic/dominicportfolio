@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com;">
     <title>Dominic Kudom | GeoSpatial Developer</title>
     <meta name="description" content="Professional GeoSpatial Developer specializing in geospatial analysis, mapping solutions, and spatial data management.">
     <meta property="og:title" content="Dominic Kudom | GeoSpatial Developer">
@@ -25,16 +25,6 @@
             color: #fff;
             line-height: 1.6;
             overflow: hidden;
-        }
-
-        body.light {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        body.dark {
-            background-color: #000000;
-            color: #ffffff;
         }
 
         #globe-container {
@@ -193,43 +183,6 @@
         .social-links a:hover {
             color: #4ECDC4;
         }
-
-        .theme-toggle {
-            position: fixed;
-            bottom: 5%;
-            left: 5%;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .theme-toggle input {
-            display: none;
-        }
-
-        .theme-toggle label {
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-        }
-
-        .theme-toggle input:checked + label:first-of-type {
-            display: none;
-        }
-
-        .theme-toggle input:checked + label:last-of-type {
-            display: inline;
-        }
-
-        .python { color: #3572A5; } /* Python Blue */
-        .flask { color: #FF5733; } /* Flask Red */
-        .django { color: #092E20; } /* Django Green */
-        .react { color: #61DAFB; } /* React Blue */
-        .three { color: #8CC84B; } /* Three.js Green */
-        .postgres { color: #FFA500; } /* PostgreSQL Orange */
-        .postgis { color: #5B8C9C; } /* PostGIS Teal */
-        .openlayers { color: #800080; } /* OpenLayers Purple */
-        .leaflet { color: #3D9970; } /* Leaflet Green */
 
         @media (max-width: 768px) {
             #globe-container {
@@ -505,15 +458,10 @@
     </div>
 
     <div class="tech-stack">
-        <span class="python">Python</span>, 
-        <span class="flask">Flask</span>, 
-        <span class="django">Django</span><br>
-        <span class="react">React.js</span>, 
-        <span class="three">Three.js</span><br>
-        <span class="postgres">PostgreSQL</span>, 
-        <span class="postgis">PostGIS</span><br>
-        <span class="openlayers">OpenLayers</span>, 
-        <span class="leaflet">Leaflet</span>
+        Python, Flask, Django<br>
+        React.js, Three.js<br>
+        PostgreSQL, PostGIS<br>
+        OpenLayers, Leaflet
     </div>
 
     <h1 class="company-name">ECSTASY GEOSPATIAL SERVICES</h1>
@@ -535,12 +483,6 @@
         <a href="https://github.com/PlnDominic" target="_blank">Github</a>
         <a href="https://linkedin.com/in/dominic-kudom" target="_blank">LinkedIn</a>
         <a href="mailto:dominickudom@icloud.com">Gmail</a>
-    </div>
-
-    <div class="theme-toggle">
-        <label for="toggle">🌙</label>
-        <input type="checkbox" id="toggle" />
-        <label for="toggle">☀️</label>
     </div>
 
     <script type="importmap">

@@ -1,7 +1,7 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import getStarfield from './src/getStarfield.js';
 import { drawThreeGeo } from './src/threeGeoJSON.js';
-import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
-import './3d-globe-with-threejs-main/3d-globe-with-threejs-main/index.js';
 
 class Globe {
     constructor() {
@@ -36,7 +36,6 @@ class Globe {
         this.setupRenderer();
         this.setupLights();
         this.createGlobe();
-        this.controls = new OrbitControls(this.camera, this.canvas);
         this.setupControls();
         
         this.init();
@@ -44,17 +43,6 @@ class Globe {
         
         // Listen for theme changes
         this.setupThemeListener();
-        
-        // Add event listener for theme toggle
-        const toggle = document.getElementById('toggle');
-        toggle.addEventListener('change', () => {
-            this.currentTheme = toggle.checked ? 'light' : 'dark';
-            this.updateTheme();
-        });
-        toggle.checked = this.currentTheme === 'light'; // Set initial state based on current theme
-
-        // Apply the initial theme to the body
-        document.body.className = this.currentTheme;
     }
 
     async init() {
@@ -76,8 +64,7 @@ class Globe {
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
-            alpha: true,
-            context: this.canvas.getContext('webgl', { preserveDrawingBuffer: true })
+            alpha: true
         });
         this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -94,6 +81,7 @@ class Globe {
     }
 
     setupControls() {
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.rotateSpeed = 0.5;
@@ -128,6 +116,29 @@ class Globe {
             this.globe.material.color.setHex(this.currentTheme === 'light' ? 0xFFFFFF : 0x000000);
             this.globe.material.opacity = this.currentTheme === 'light' ? 0.9 : 0.8;
         }
+        
+        // Update countries colors
+        if (this.globe.children.length > 1) {
+            const countriesGroup = this.globe.children[1];
+            countriesGroup.traverse((child) => {
+                if (child instanceof THREE.Mesh) {
+                    const lat = child.userData.lat || 0;
+                    const lon = child.userData.lon || 0;
+                    child.material.color.setHex(this.getColorByCoordinate(lat, lon));
+                    child.material.opacity = this.currentTheme === 'light' ? 0.9 : 0.8;
+                }
+            });
+        }
+        
+        // Update ambient light intensity
+        this.scene.traverse((child) => {
+            if (child instanceof THREE.AmbientLight) {
+                child.intensity = this.currentTheme === 'light' ? 0.8 : 0.6;
+            }
+            if (child instanceof THREE.PointLight) {
+                child.intensity = this.currentTheme === 'light' ? 1.2 : 1.0;
+            }
+        });
     }
 
     createGlobe() {
@@ -216,7 +227,7 @@ class Globe {
             return this.continentColors[this.currentTheme]['Africa'];
         }
         
-        if (lon >= 60 && lon <= 145) { // Asia
+        if (lon > 60 && lon <= 145) { // Asia
             if (lat > -10) return this.continentColors[this.currentTheme]['Asia'];
             return this.continentColors[this.currentTheme]['Oceania'];
         }
@@ -254,15 +265,5 @@ class Globe {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const toggle = document.getElementById('toggle');
-    toggle.addEventListener('change', () => {
-        const currentTheme = toggle.checked ? 'light' : 'dark';
-        document.body.className = currentTheme; // Apply theme to body
-    });
-    toggle.checked = document.body.classList.contains('light'); // Set initial state based on current theme
-
-    // Apply the initial theme to the body
-    document.body.className = toggle.checked ? 'light' : 'dark';
-    new Globe();
-});
+// Initialize the globe
+new Globe();
