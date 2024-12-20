@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com 'nonce-1234567890'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com;">
     <title>Dominic Kudom | GeoSpatial Developer</title>
     <meta name="description" content="Professional GeoSpatial Developer specializing in geospatial analysis, mapping solutions, and spatial data management.">
     <meta property="og:title" content="Dominic Kudom | GeoSpatial Developer">
@@ -192,6 +192,33 @@
 
         .social-links a:hover {
             color: #4ECDC4;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 5%;
+            left: 5%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .theme-toggle input {
+            display: none;
+        }
+
+        .theme-toggle label {
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        .theme-toggle input:checked + label:first-of-type {
+            display: none;
+        }
+
+        .theme-toggle input:checked + label:last-of-type {
+            display: inline;
         }
 
         .python { color: #3572A5; } /* Python Blue */
@@ -508,6 +535,12 @@
         <a href="https://github.com/PlnDominic" target="_blank">Github</a>
         <a href="https://linkedin.com/in/dominic-kudom" target="_blank">LinkedIn</a>
         <a href="mailto:dominickudom@icloud.com">Gmail</a>
+    </div>
+
+    <div class="theme-toggle">
+        <label for="toggle">🌙</label>
+        <input type="checkbox" id="toggle" />
+        <label for="toggle">☀️</label>
     </div>
 
     <script type="importmap">
