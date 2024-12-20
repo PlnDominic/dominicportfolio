@@ -52,6 +52,9 @@ class Globe {
             document.body.className = this.currentTheme; // Apply theme to body
         });
         toggle.checked = this.currentTheme === 'light'; // Set initial state based on current theme
+
+        // Apply the initial theme to the body
+        document.body.className = this.currentTheme;
     }
 
     async init() {
