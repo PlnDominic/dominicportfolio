@@ -19,6 +19,17 @@ body {
     line-height: 1.6;
 }
 
+body.light-mode {
+    background-color: #fff; /* Light background */
+    color: #000; /* Dark text */
+}
+
+body.dark-mode {
+    background-color: #000; /* Dark background */
+    color: #fff; /* Light text */
+    border: 5px solid red; /* Debugging border */
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
