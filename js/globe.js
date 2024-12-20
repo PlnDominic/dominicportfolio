@@ -1,6 +1,6 @@
 import getStarfield from './src/getStarfield.js';
 import { drawThreeGeo } from './src/threeGeoJSON.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 import './3d-globe-with-threejs-main/3d-globe-with-threejs-main/index.js';
 
 class Globe {
