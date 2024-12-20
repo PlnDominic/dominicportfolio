@@ -272,18 +272,14 @@ class Globe {
             // Night mode styles
             document.body.style.backgroundColor = '#000';
             document.body.style.color = '#fff';
-            // Update globe colors for night mode
-            this.currentTheme = 'dark';
             console.log('Switched to Night Mode');
         } else {
             // Day mode styles
             document.body.style.backgroundColor = '#fff';
             document.body.style.color = '#000';
-            // Update globe colors for day mode
-            this.currentTheme = 'light';
             console.log('Switched to Day Mode');
         }
-        this.updateTheme();
+        // No need to call updateTheme() for the globe
     }
 }
 
