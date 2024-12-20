@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -486,8 +485,11 @@
         <a href="mailto:dominickudom@icloud.com">Gmail</a>
     </div>
 
-    <div id="theme-toggle" style="position: fixed; bottom: 10px; left: 10px; font-size: 12px; z-index: 1000;">
-        <i id="toggle-icon" class="fas fa-sun" style="cursor: pointer;"></i>
+    <div id="theme-toggle" style="position: fixed; bottom: 10px; left: 10px; z-index: 1000;">
+        <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" style="cursor: pointer;">
+            <circle cx="12" cy="12" r="5" fill="yellow" class="day-icon" style="display: none;"/>
+            <path d="M12 4V2M12 22v-2M4 12H2m20 0h-2M18.36 5.64l-1.42-1.42M5.64 18.36l-1.42 1.42M18.36 18.36l-1.42 1.42M5.64 5.64l-1.42-1.42" stroke="black" stroke-width="2"/>
+        </svg>
     </div>
 
     <script type="importmap">
