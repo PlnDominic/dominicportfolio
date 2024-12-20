@@ -9,29 +9,17 @@ class Globe {
         this.container = document.getElementById('globe-container');
         this.canvas = document.getElementById('globe-canvas');
         
-        // Define continent colors for both themes
+        // Define continent colors
         this.continentColors = {
-            dark: {
-                'North America': 0x4287f5,  // Bright Blue
-                'South America': 0x42f54b,  // Bright Green
-                'Europe': 0xf542cb,         // Pink
-                'Africa': 0xf5a142,         // Orange
-                'Asia': 0xf54242,           // Red
-                'Oceania': 0x42f5f5,        // Cyan
-                'Antarctica': 0xffffff      // White
-            },
-            light: {
-                'North America': 0x2b5aa3,  // Darker Blue
-                'South America': 0x2ba332,  // Darker Green
-                'Europe': 0xa32b89,         // Darker Pink
-                'Africa': 0xa36b2b,         // Darker Orange
-                'Asia': 0xa32b2b,           // Darker Red
-                'Oceania': 0x2ba3a3,        // Darker Cyan
-                'Antarctica': 0xe0e0e0      // Light Gray
-            }
+            'North America': 0x4287f5,  // Bright Blue
+            'South America': 0x42f54b,  // Bright Green
+            'Europe': 0xf542cb,         // Pink
+            'Africa': 0xf5a142,         // Orange
+            'Asia': 0xf54242,           // Red
+            'Oceania': 0x42f5f5,        // Cyan
+            'Antarctica': 0xffffff      // White
         };
         
-        this.currentTheme = 'dark';  // Default theme
         this.setupCamera();
         this.setupRenderer();
         this.setupLights();
@@ -40,21 +28,6 @@ class Globe {
         
         this.init();
         window.addEventListener('resize', this.onWindowResize.bind(this));
-        
-        // Listen for theme changes
-        this.setupThemeListener();
-        
-        // Add event listener for theme toggle
-        const toggle = document.getElementById('toggle');
-        toggle.addEventListener('change', () => {
-            this.currentTheme = toggle.checked ? 'light' : 'dark';
-            this.updateTheme();
-            document.body.className = this.currentTheme; // Apply theme to body
-        });
-        toggle.checked = this.currentTheme === 'light'; // Set initial state based on current theme
-
-        // Apply the initial theme to the body
-        document.body.className = this.currentTheme;
     }
 
     async init() {
@@ -99,58 +72,6 @@ class Globe {
         this.controls.rotateSpeed = 0.5;
         this.controls.minDistance = 150;
         this.controls.maxDistance = 350;
-    }
-
-    setupThemeListener() {
-        // Watch for changes in the color scheme
-        window.matchMedia('(prefers-color-scheme: light)').addListener((e) => {
-            this.currentTheme = e.matches ? 'light' : 'dark';
-            this.updateTheme();
-        });
-        
-        // Set initial theme
-        this.currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        this.updateTheme();
-    }
-
-    updateTheme() {
-        // Update wireframe color
-        if (this.globe) {
-            const wireframe = this.globe.children.find(child => child instanceof THREE.LineSegments);
-            if (wireframe) {
-                wireframe.material.color.setHex(this.currentTheme === 'light' ? 0x2A9D8F : 0x4ECDC4);
-                wireframe.material.opacity = this.currentTheme === 'light' ? 0.2 : 0.1;
-            }
-        }
-        
-        // Update globe material
-        if (this.globe) {
-            this.globe.material.color.setHex(this.currentTheme === 'light' ? 0xFFFFFF : 0x000000);
-            this.globe.material.opacity = this.currentTheme === 'light' ? 0.9 : 0.8;
-        }
-        
-        // Update countries colors
-        if (this.globe.children.length > 1) {
-            const countriesGroup = this.globe.children[1];
-            countriesGroup.traverse((child) => {
-                if (child instanceof THREE.Mesh) {
-                    const lat = child.userData.lat || 0;
-                    const lon = child.userData.lon || 0;
-                    child.material.color.setHex(this.getColorByCoordinate(lat, lon));
-                    child.material.opacity = this.currentTheme === 'light' ? 0.9 : 0.8;
-                }
-            });
-        }
-        
-        // Update ambient light intensity
-        this.scene.traverse((child) => {
-            if (child instanceof THREE.AmbientLight) {
-                child.intensity = this.currentTheme === 'light' ? 0.8 : 0.6;
-            }
-            if (child instanceof THREE.PointLight) {
-                child.intensity = this.currentTheme === 'light' ? 1.2 : 1.0;
-            }
-        });
     }
 
     createGlobe() {
@@ -226,30 +147,30 @@ class Globe {
 
     getColorByCoordinate(lat, lon) {
         // Determine continent based on coordinates
-        if (lat >= 60) return this.continentColors[this.currentTheme]['North America']; // Arctic
-        if (lat <= -60) return this.continentColors[this.currentTheme]['Antarctica']; // Antarctica
+        if (lat >= 60) return this.continentColors['North America']; // Arctic
+        if (lat <= -60) return this.continentColors['Antarctica']; // Antarctica
         
         if (lon >= -170 && lon <= -30) { // Americas
-            if (lat > 15) return this.continentColors[this.currentTheme]['North America'];
-            return this.continentColors[this.currentTheme]['South America'];
+            if (lat > 15) return this.continentColors['North America'];
+            return this.continentColors['South America'];
         }
         
         if (lon >= -30 && lon <= 60) { // Europe and Africa
-            if (lat > 35) return this.continentColors[this.currentTheme]['Europe'];
-            return this.continentColors[this.currentTheme]['Africa'];
+            if (lat > 35) return this.continentColors['Europe'];
+            return this.continentColors['Africa'];
         }
         
         if (lon > 60 && lon <= 145) { // Asia
-            if (lat > -10) return this.continentColors[this.currentTheme]['Asia'];
-            return this.continentColors[this.currentTheme]['Oceania'];
+            if (lat > -10) return this.continentColors['Asia'];
+            return this.continentColors['Oceania'];
         }
         
         if (lon > 145) { // Pacific/Oceania
-            if (lat > 0) return this.continentColors[this.currentTheme]['Asia'];
-            return this.continentColors[this.currentTheme]['Oceania'];
+            if (lat > 0) return this.continentColors['Asia'];
+            return this.continentColors['Oceania'];
         }
         
-        return this.continentColors[this.currentTheme]['Oceania']; // Default
+        return this.continentColors['Oceania']; // Default
     }
 
     onWindowResize() {
