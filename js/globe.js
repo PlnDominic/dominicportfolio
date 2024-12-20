@@ -277,5 +277,6 @@ class Globe {
     }
 }
 
-// Initialize the globe
-new Globe();
+document.addEventListener('DOMContentLoaded', function() {
+    new Globe();
+});
