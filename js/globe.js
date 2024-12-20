@@ -43,9 +43,6 @@ class Globe {
         
         // Listen for theme changes
         this.setupThemeListener();
-        
-        // Add event listener for day/night mode toggle
-        document.getElementById('modeToggle').addEventListener('change', this.toggleDayNightMode.bind(this));
     }
 
     async init() {
@@ -265,21 +262,6 @@ class Globe {
         
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
-    }
-
-    toggleDayNightMode() {
-        if (document.getElementById('modeToggle').checked) {
-            // Night mode styles
-            document.body.style.backgroundColor = '#000';
-            document.body.style.color = '#fff';
-            console.log('Switched to Night Mode');
-        } else {
-            // Day mode styles
-            document.body.style.backgroundColor = '#fff';
-            document.body.style.color = '#000';
-            console.log('Switched to Day Mode');
-        }
-        // No need to call updateTheme() for the globe
     }
 }
 
