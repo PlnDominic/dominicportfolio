@@ -1,5 +1,7 @@
 import getStarfield from './src/getStarfield.js';
 import { drawThreeGeo } from './src/threeGeoJSON.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import './3d-globe-with-threejs-main/3d-globe-with-threejs-main/index.js';
 
 class Globe {
     constructor() {
@@ -34,6 +36,7 @@ class Globe {
         this.setupRenderer();
         this.setupLights();
         this.createGlobe();
+        this.controls = new OrbitControls(this.camera, this.canvas);
         this.setupControls();
         
         this.init();
@@ -91,7 +94,6 @@ class Globe {
     }
 
     setupControls() {
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.rotateSpeed = 0.5;
