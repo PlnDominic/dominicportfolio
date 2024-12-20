@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/OrbitControls.js';
+import * as THREE from '../../node_modules/three/build/three.module.js';
+import { OrbitControls } from '../../node_modules/three/examples/jsm/controls/OrbitControls.js';
 import getStarfield from './src/getStarfield.js';
 import { drawThreeGeo } from './src/threeGeoJSON.js';
 
@@ -49,7 +49,6 @@ class Globe {
         toggle.addEventListener('change', () => {
             this.currentTheme = toggle.checked ? 'light' : 'dark';
             this.updateTheme();
-            document.body.className = this.currentTheme; // Apply theme to body
         });
         toggle.checked = this.currentTheme === 'light'; // Set initial state based on current theme
 
@@ -278,5 +277,14 @@ class Globe {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('toggle');
+    toggle.addEventListener('change', () => {
+        const currentTheme = toggle.checked ? 'light' : 'dark';
+        document.body.className = currentTheme; // Apply theme to body
+    });
+    toggle.checked = document.body.classList.contains('light'); // Set initial state based on current theme
+
+    // Apply the initial theme to the body
+    document.body.className = toggle.checked ? 'light' : 'dark';
     new Globe();
 });
