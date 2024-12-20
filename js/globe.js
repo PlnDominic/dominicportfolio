@@ -49,6 +49,7 @@ class Globe {
         toggle.addEventListener('change', () => {
             this.currentTheme = toggle.checked ? 'light' : 'dark';
             this.updateTheme();
+            document.body.className = this.currentTheme; // Apply theme to body
         });
         toggle.checked = this.currentTheme === 'light'; // Set initial state based on current theme
     }
