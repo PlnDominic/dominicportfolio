@@ -169,7 +169,12 @@ class Globe {
     async loadCountries() {
         try {
             const response = await fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson');
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             const data = await response.json();
+            console.log('Fetched country data:', data);
             
             // Create a group for all countries
             const countriesGroup = new THREE.Group();
@@ -201,9 +206,7 @@ class Globe {
                     }
                 }
             });
-            
             this.globe.add(countriesGroup);
-            
         } catch (error) {
             console.error('Error loading countries:', error);
         }
