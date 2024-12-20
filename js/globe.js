@@ -199,5 +199,11 @@ class Globe {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('toggle');
+    toggle.addEventListener('change', () => {
+        const currentTheme = toggle.checked ? 'light' : 'dark';
+        document.body.className = currentTheme; // Apply theme to body
+    });
+    toggle.checked = document.body.classList.contains('light'); // Set initial state based on current theme
     new Globe();
 });
